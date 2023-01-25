@@ -11,6 +11,7 @@
             "request": "attach",
             "preLaunchTask": "Start_Nautilus",
             "postDebugTask": "Stop_Nautilus",
+
             "connect": {
                 "host": "localhost",
                 "port": 5678
