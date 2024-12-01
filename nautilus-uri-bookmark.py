@@ -1,4 +1,4 @@
-# nautilus-url-shortcut
+# nautilus-uri-bookmark
 #
 # Save web URIs to a cross-platform shortcut file (.html) that can be launched to visit the URL
 #
@@ -69,7 +69,7 @@ if gdk_version == "3.0":
 
         def get_background_items(self, window, inode):
             item = Nautilus.MenuItem(
-                name="nautilus_url_shortcut",
+                name="nautilus_uri_bookmark",
                 label="Create URL shortcut",
                 tip="Create shortcut file from clipboard web URI",
             )
@@ -120,7 +120,7 @@ else:
 
         def get_background_items(self, inode):
             item = Nautilus.MenuItem(
-                name="nautilus_url_shortcut",
+                name="nautilus_uri_bookmark",
                 label="Create URL shortcut",
                 tip="Create shortcut file from clipboard web URI",
             )

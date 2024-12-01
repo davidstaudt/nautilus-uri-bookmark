@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# Uninstall nautilus-url-shortcut
+# Uninstall nautilus-uri-bookmark
 
-echo "Uninstalling nautilus-url-shortcut..."
+echo "Uninstalling nautilus-uri-bookmark..."
 
 # Uninstall Nautilus extension
-rm ~/.local/share/nautilus-python/extensions/nautilus-url-shortcut.py
+rm ~/.local/share/nautilus-python/extensions/nautilus-uri-bookmark.py
 
 # Restart nautilus
 echo "Restarting nautilus..."

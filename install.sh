@@ -2,7 +2,7 @@
 
 # Install nautilus-url-shortcut
 
-echo "Installing nautilus-url-shortcut..."
+echo "Installing nautilus-uri-bookmark..."
 
 if type "pacman" > /dev/null 2>&1
 then
@@ -48,13 +48,27 @@ fi
 # Remove previous version and setup folder
 echo "Removing previous version (if found)..."
 mkdir -p ~/.local/share/nautilus-python/extensions
-rm -f ~/.local/share/nautilus-python/extensions/nautilus-url-shortcut.py
+rm -f ~/.local/share/nautilus-python/extensions/nautilus-uri-bookmark.py
 
 echo "Installing files..."
 
+# Install mime type
+mkdir -p ~/.local/share/mime/packages
+cp application-vnd.dstaudt-nautilus-uri-bookmark.xml ~/.local/share/mime/packages
+update-mime-database ~/.local/share/mime
+
+# Install opener script
+mkdir -p ~/.local/bin
+cp nautilus-uri-bookmark.sh ~/.local/bin/nautilus-uri-bookmark
+chmod +x ~/.local/bin/nautilus-uri-bookmark
+
+# Install desktop file
+cp nautilus-uri-bookmark.desktop ~/.local/share/applications/
+update-desktop-database ~/.local/share/applications/
+
 # Install Nautilus extension
 mkdir -p ~/.local/share/nautilus-python/extensions
-cp nautilus-url-shortcut.py ~/.local/share/nautilus-python/extensions/
+cp nautilus-uri-bookmark.py ~/.local/share/nautilus-python/extensions/
 
 # Restart nautilus
 echo "Restarting nautilus..."
