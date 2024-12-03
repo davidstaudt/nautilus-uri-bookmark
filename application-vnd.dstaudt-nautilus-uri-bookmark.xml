@@ -1,8 +1,10 @@
 <?xml version="1.0"?>
 <mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
   <mime-type type="application/vnd.dstaudt-nautilus-uri-bookmark">
-    <comment>Webex Shortcut</comment>
-    <glob pattern="*.space"/>
-    <icon name="user-bookmarks-symbolic"/>
+    <comment>Nautilus URI bookmark</comment>
+    <magic-deleteall/>
+    <glob-deleteall/>
+    <glob pattern="*.uri"/>
+    <icon name="application-x-mswinurl"/>
   </mime-type>
 </mime-info>

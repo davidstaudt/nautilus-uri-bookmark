@@ -1,7 +1,7 @@
 [Desktop Entry]
-Exec=/home/dstaudt/.local/bin/nautilus-uri-bookmark %F
-Icon=user-bookmarks-symbolic
+Exec=/home/dstaudt/.local/bin/application-vnd.dstaudt-nautilus-uri-bookmark %F
+Icon=application-x-mswinurl
 Name=URI Bookmark Opener
 Terminal=false
 Type=Application
-MimeType=application/nautilus-uri-bookmark
+MimeType=application/vnd.dstaudt-nautilus-uri-bookmark

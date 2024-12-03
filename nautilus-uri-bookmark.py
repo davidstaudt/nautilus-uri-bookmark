@@ -1,6 +1,6 @@
 # nautilus-uri-bookmark
 #
-# Save web URIs to a cross-platform shortcut file (.html) that can be launched to visit the URL
+# Save web URIs to a file with a .uri extension that can be launched to visit the URL.
 #
 # Ensure the python-nautilus package is installed
 # Place ~/.local/share/nautilus-python/extensions/, then restart Nautilus
@@ -18,7 +18,6 @@ except ValueError:
 gdk_version = get_required_version("Gdk")
 
 
-from gi.repository import Nautilus, GObject, Gdk, Gtk
 from urllib.parse import urlparse
 
 if os.getenv("NAUTILUS_PYTHON_DEBUG") == "misc":
@@ -30,7 +29,10 @@ if os.getenv("NAUTILUS_PYTHON_DEBUG") == "misc":
 
 if gdk_version == "3.0":
 
-    class UrlShortcutMenuProvider(GObject.GObject, Nautilus.MenuProvider):
+    require_version("Gtk", "3.0")
+    from gi.repository import Nautilus, GObject, Gdk, Gtk
+
+    class UriBookmarkMenuProvider(GObject.GObject, Nautilus.MenuProvider):
         def __init__(self):
             super().__init__()
             self.clipboard = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD)
@@ -46,7 +48,7 @@ if gdk_version == "3.0":
             if link.scheme not in ["http", "https"]:
                 return []
 
-            fileText = f'<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml"><head><title>URL Shortcut</title><meta http-equiv="refresh" charset="utf-8" content="0; url={link.geturl()}" /></head><body><p>Loading <a href="{link.geturl()}">{link.netloc}</a>...</p></body></html>'
+            fileText = link.geturl()
 
             fileName = f"Link to {link.netloc}"
             fileName = "".join(x for x in fileName if (x.isalnum() or x in ":&[]@._- "))
@@ -57,11 +59,11 @@ if gdk_version == "3.0":
             if not os.path.exists(basePath):
                 return
             instance = 0
-            path = os.path.join(basePath, fileName + ".html")
+            path = os.path.join(basePath, fileName + ".uri")
             if os.path.exists(path):
                 while True:
                     instance += 1
-                    path = os.path.join(basePath, f"{fileName}({str(instance)}).html")
+                    path = os.path.join(basePath, f"{fileName}({str(instance)}).uri")
                     if not os.path.exists(path):
                         break
             with open(path, "w") as file:
@@ -70,15 +72,18 @@ if gdk_version == "3.0":
         def get_background_items(self, window, inode):
             item = Nautilus.MenuItem(
                 name="nautilus_uri_bookmark",
-                label="Create URL shortcut",
+                label="Create URI shortcut",
                 tip="Create shortcut file from clipboard web URI",
             )
             item.connect("activate", self.save_uri, inode)
             return [item]
 
 else:
-
-    class UrlShortcutMenuProvider(GObject.GObject, Nautilus.MenuProvider):
+    
+    require_version("Gtk", "4.0")
+    from gi.repository import Nautilus, GObject, Gdk, Gtk
+    
+    class UriBookmarkMenuProvider(GObject.GObject, Nautilus.MenuProvider):
         def __init__(self):
             super().__init__()
             self.clipboard = Gdk.Display.get_clipboard(Gdk.Display.get_default())
@@ -97,7 +102,7 @@ else:
             if link.scheme not in ["http", "https"]:
                 return []
 
-            fileText = f'<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml"><head><title>URL Shortcut</title><meta http-equiv="refresh" charset="utf-8" content="0; url={link.geturl()}" /></head><body><p>Loading <a href="{link.geturl()}">{link.netloc}</a>...</p></body></html>'
+            fileText = link.geturl()
 
             fileName = f"Link to {link.netloc}"
             fileName = "".join(x for x in fileName if (x.isalnum() or x in ":&[]@._- "))
@@ -108,11 +113,11 @@ else:
             if not os.path.exists(basePath):
                 return
             instance = 0
-            path = os.path.join(basePath, fileName + ".html")
+            path = os.path.join(basePath, fileName + ".uri")
             if os.path.exists(path):
                 while True:
                     instance += 1
-                    path = os.path.join(basePath, f"{fileName}({str(instance)}).html")
+                    path = os.path.join(basePath, f"{fileName}({str(instance)}).uri")
                     if not os.path.exists(path):
                         break
             with open(path, "w") as file:
@@ -121,7 +126,7 @@ else:
         def get_background_items(self, inode):
             item = Nautilus.MenuItem(
                 name="nautilus_uri_bookmark",
-                label="Create URL shortcut",
+                label="Create URI shortcut",
                 tip="Create shortcut file from clipboard web URI",
             )
             item.connect("activate", self.save_uri, inode)

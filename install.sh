@@ -59,8 +59,8 @@ update-mime-database ~/.local/share/mime
 
 # Install opener script
 mkdir -p ~/.local/bin
-cp nautilus-uri-bookmark.sh ~/.local/bin/nautilus-uri-bookmark
-chmod +x ~/.local/bin/nautilus-uri-bookmark
+cp application-vnd.dstaudt-nautilus-uri-bookmark ~/.local/bin/
+chmod +x ~/.local/bin/application-vnd.dstaudt-nautilus-uri-bookmark
 
 # Install desktop file
 cp nautilus-uri-bookmark.desktop ~/.local/share/applications/
