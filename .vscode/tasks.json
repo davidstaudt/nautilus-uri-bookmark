@@ -1,0 +1,36 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Install_Extension_File",
+            "type": "shell",
+            "command": "cp nautilus-uri-bookmark.py ~/.local/share/nautilus-python/extensions/"
+        },
+        {
+            "label": "Start_Nautilus",
+            "type": "shell",
+            "command": "G_DEBUG='all' NAUTILUS_DEBUG='All' NAUTILUS_PYTHON_DEBUG='misc' nautilus",
+            "dependsOn": [
+                "Install_Extension_File"
+            ],
+            "isBackground": true,
+            "problemMatcher": [{
+                "pattern": [{
+                    "regexp": ".",
+                    "file": 1,
+                    "location": 2,
+                    "message": 3
+                }],
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "nautilus-python:Py_Initialize",
+                    "endsPattern": "Waiting for debugger attach"
+                }
+            }]
+        },{
+            "label": "Stop_Nautilus",
+            "type": "shell",
+            "command": "killall -KILL nautilus"
+        }
+    ]
+}

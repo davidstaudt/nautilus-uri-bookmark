@@ -1,0 +1,17 @@
+Source: nautilus-uri-bookmark
+Section: utils
+Priority: extra
+Standards-Version: 0.1.1
+Maintainer: David Staudt <dstaudt@usa.net>
+Build-Depends: debhelper (>= 8.0.0), dh-python, python3-all, python3-distutils-extra
+Homepage: https://github.com/costales/folder-color
+
+Package: folder-color
+Architecture: all
+Section: utils
+Priority: extra
+Depends: python3-nautilus, nautilus, ${python:Depends}
+Replaces: folder-color-common, folder-color-yaru
+Breaks: folder-color-common, folder-color-yaru
+Description: Folder Color
+ Change a folder color
